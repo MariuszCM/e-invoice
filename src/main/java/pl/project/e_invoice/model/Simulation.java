@@ -1,10 +1,10 @@
 package pl.project.e_invoice.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,8 +14,9 @@ public class Simulation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
-    private List<HistoryEvent> history;
+    @ElementCollection
+    private List<HistoryEvent> history = new ArrayList<HistoryEvent>();
     @OneToOne
+    @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 }
