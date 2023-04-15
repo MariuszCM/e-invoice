@@ -1,6 +1,13 @@
 package pl.project.e_invoice.model;
 
+import lombok.AllArgsConstructor;
+import lombok.ToString;
+
+@ToString
+@AllArgsConstructor
 public enum InvoiceStatus {
-    NOT_PAID,
-    PAID
+    NOT_PAID("NASD001"),
+    PAID("MCMA001");
+
+    private final String emailTemplateCode;
 }
