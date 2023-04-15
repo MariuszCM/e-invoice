@@ -16,4 +16,5 @@ public class Company {
     private String nip;
     private String companyName;
     private String address;
+    private String email;
 }
