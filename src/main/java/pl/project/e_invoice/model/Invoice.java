@@ -16,6 +16,7 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private InvoiceType invoiceType;
     private LocalDateTime dateOfIssue;
     private BigDecimal value;
     private String name;
