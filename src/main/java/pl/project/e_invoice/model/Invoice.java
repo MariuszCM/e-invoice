@@ -1,10 +1,6 @@
 package pl.project.e_invoice.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,13 +11,12 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode()
 @ToString(callSuper = true)
+@AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
 @Entity
-public class HistoryEvent {
+public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private EventType eventType;
-    private LocalDateTime eventTime;
+    private LocalDateTime dateOfIssue;
 }
