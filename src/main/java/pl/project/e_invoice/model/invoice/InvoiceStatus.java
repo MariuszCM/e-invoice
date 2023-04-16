@@ -6,8 +6,9 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public enum InvoiceStatus {
-    NOT_PAID("NASD001"),
-    PAID("MCMA001");
+    NOT_PAID("NASD001", "Nieopłacona"),
+    PAID("MCMA001", "Opłacona");
 
     private final String emailTemplateCode;
+    private final String label;
 }
