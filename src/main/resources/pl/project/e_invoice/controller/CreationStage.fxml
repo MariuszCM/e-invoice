@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.22917352650642075" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.project.e_invoice.controller.CreationStage">
+<SplitPane dividerPositions="0.22917352650642075" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.project.e_invoice.controller.CreationStageController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="719.0" prefWidth="122.0" style="-fx-background-color: #A1C2E1;">
          <children>
@@ -22,27 +22,27 @@
                   <Font size="25.0" />
                </font>
             </Text>
-            <TextField layoutX="300.0" layoutY="244.0" promptText="NIP Nabywcy" />
-            <TextField layoutX="247.0" layoutY="127.0" promptText="Numer faktury" />
-            <TextField layoutX="17.0" layoutY="244.0" promptText="NIP Sprzedawcy" />
-            <ChoiceBox layoutX="72.0" layoutY="126.0" prefWidth="150.0" />
+            <TextField fx:id="buyerNip" layoutX="300.0" layoutY="244.0" promptText="NIP Nabywcy" />
+            <TextField fx:id="invoiceId" layoutX="247.0" layoutY="127.0" promptText="Numer faktury" />
+            <TextField fx:id="sellerNip" layoutX="17.0" layoutY="244.0" promptText="NIP Sprzedawcy" />
+            <ChoiceBox fx:id="invoiceType" layoutX="72.0" layoutY="126.0" prefWidth="150.0" />
             <Text layoutX="72.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rodzaj faktury">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <DatePicker layoutX="247.0" layoutY="184.0" promptText="Data wystawienia" />
-            <Button fx:id="backToMainStage11" layoutX="348.0" layoutY="564.0" mnemonicParsing="false" text="Zapisz" />
-            <Button fx:id="backToMainStage1" layoutX="180.0" layoutY="244.0" mnemonicParsing="false" text="Szukaj podatnika" />
-            <TextField layoutX="17.0" layoutY="303.0" prefHeight="26.0" prefWidth="212.0" promptText="Nazwa Sprzedawcy" />
-            <TextField layoutX="238.0" layoutY="303.0" prefHeight="26.0" prefWidth="212.0" promptText="Nazwa Nabywcy" />
-            <TextField layoutX="17.0" layoutY="346.0" prefHeight="26.0" prefWidth="212.0" promptText="Adres Sprzedawcy" />
-            <TextField layoutX="17.0" layoutY="393.0" prefHeight="26.0" prefWidth="212.0" promptText="Email Sprzedawcy" />
-            <TextField layoutX="238.0" layoutY="346.0" prefHeight="26.0" prefWidth="212.0" promptText="Adres Nabywcy" />
-            <TextField layoutX="238.0" layoutY="393.0" prefHeight="26.0" prefWidth="212.0" promptText="Email Nabywcy" />
-            <TextField layoutX="17.0" layoutY="453.0" prefHeight="26.0" prefWidth="212.0" promptText="Nazwa faktury" />
-            <TextField layoutX="238.0" layoutY="453.0" prefHeight="26.0" prefWidth="212.0" promptText="Kwota netto" />
-            <ChoiceBox layoutX="72.0" layoutY="183.0" prefWidth="150.0" />
+            <DatePicker fx:id="invoiceIssueDate" layoutX="247.0" layoutY="184.0" promptText="Data wystawienia" />
+            <Button fx:id="saveInvoice" layoutX="348.0" layoutY="564.0" mnemonicParsing="false" text="Zapisz" />
+            <Button fx:id="searchCompany" layoutX="180.0" layoutY="244.0" mnemonicParsing="false" text="Szukaj podatnika" />
+            <TextField fx:id="sellerName" layoutX="17.0" layoutY="303.0" prefHeight="26.0" prefWidth="212.0" promptText="Nazwa Sprzedawcy" />
+            <TextField fx:id="buyerName" layoutX="238.0" layoutY="303.0" prefHeight="26.0" prefWidth="212.0" promptText="Nazwa Nabywcy" />
+            <TextField fx:id="sellerAddress" layoutX="17.0" layoutY="346.0" prefHeight="26.0" prefWidth="212.0" promptText="Adres Sprzedawcy" />
+            <TextField fx:id="sellerEmail" layoutX="17.0" layoutY="393.0" prefHeight="26.0" prefWidth="212.0" promptText="Email Sprzedawcy" />
+            <TextField fx:id="buyerAddress" layoutX="238.0" layoutY="346.0" prefHeight="26.0" prefWidth="212.0" promptText="Adres Nabywcy" />
+            <TextField fx:id="buyerEmail" layoutX="238.0" layoutY="393.0" prefHeight="26.0" prefWidth="212.0" promptText="Email Nabywcy" />
+            <TextField fx:id="invoiceName" layoutX="17.0" layoutY="453.0" prefHeight="26.0" prefWidth="212.0" promptText="Nazwa faktury" />
+            <TextField fx:id="amount" layoutX="238.0" layoutY="453.0" prefHeight="26.0" prefWidth="212.0" promptText="Kwota netto" />
+            <ChoiceBox fx:id="invoiceStatus" layoutX="72.0" layoutY="183.0" prefWidth="150.0" />
             <Text layoutX="74.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status faktury">
                <font>
                   <Font size="14.0" />
