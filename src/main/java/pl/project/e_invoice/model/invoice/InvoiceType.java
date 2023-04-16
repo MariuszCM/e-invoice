@@ -1,10 +1,12 @@
 package pl.project.e_invoice.model.invoice;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.ToString;
 
 @AllArgsConstructor
 @ToString
+@Getter
 public enum InvoiceType {
     INCOME("WCAX001", "Przychodząca"),
     OUTCOME("LOAS001", "Wychodząca");
