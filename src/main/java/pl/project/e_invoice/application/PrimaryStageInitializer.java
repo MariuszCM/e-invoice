@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import pl.project.e_invoice.controller.CreationStage;
 
 @Component
 public class PrimaryStageInitializer implements ApplicationListener<StageReadyEvent> {
@@ -24,10 +25,10 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
     public void onApplicationEvent(StageReadyEvent event) {
         Stage stage = event.stage;
         //TODO
-//        Scene scene = new Scene(fxWeaver.loadView());
+        Scene scene = new Scene(fxWeaver.loadView(CreationStage.class));
 
         stage.setTitle(title);
-//        stage.setScene(scene);
+        stage.setScene(scene);
         stage.show();
     }
 }
