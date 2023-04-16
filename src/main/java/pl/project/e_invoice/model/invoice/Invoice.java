@@ -1,6 +1,7 @@
-package pl.project.e_invoice.model;
+package pl.project.e_invoice.model.invoice;
 
 import lombok.*;
+import pl.project.e_invoice.model.Company;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

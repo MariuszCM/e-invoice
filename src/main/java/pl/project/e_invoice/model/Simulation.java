@@ -2,6 +2,7 @@ package pl.project.e_invoice.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.project.e_invoice.model.invoice.Invoice;
 
 import javax.persistence.*;
 import java.util.ArrayList;

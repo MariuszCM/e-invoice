@@ -1,4 +1,4 @@
-package pl.project.e_invoice.model;
+package pl.project.e_invoice.model.invoice;
 
 import lombok.AllArgsConstructor;
 import lombok.ToString;
