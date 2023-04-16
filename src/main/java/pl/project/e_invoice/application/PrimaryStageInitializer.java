@@ -1,6 +1,7 @@
 package pl.project.e_invoice.application;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         Stage stage = event.stage;
         //TODO
         Scene scene = new Scene(fxWeaver.loadView(CreationStageController.class));
+        stage.getIcons().add(new Image(PrimaryStageInitializer.class.getResourceAsStream("/logo.png")));
 
         stage.setTitle(title);
         stage.setScene(scene);
