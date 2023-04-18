@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequiredArgsConstructor
 @FxmlView("CreationStage.fxml")
-public class CreationStageController {
+public class CreationInvoiceStageController {
 
     private Stage stage;
     private boolean isWindowOpen = false;

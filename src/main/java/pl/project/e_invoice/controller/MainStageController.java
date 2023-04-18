@@ -17,7 +17,7 @@ public class MainStageController {
     @FXML
     protected Button openBrowseStage;
 
-    private final FxControllerAndView<CreationStageController, SplitPane> creationStageControllerSplitPane;
+    private final FxControllerAndView<CreationInvoiceStageController, SplitPane> creationStageControllerSplitPane;
 
     @FXML
     public void initialize(){

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import pl.project.e_invoice.controller.CreationStageController;
 import pl.project.e_invoice.controller.MainStageController;
 
 @Component
