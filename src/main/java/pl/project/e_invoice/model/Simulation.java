@@ -15,7 +15,7 @@ public class Simulation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ElementCollection
+    @OneToMany(mappedBy = "simulation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HistoryEvent> history = new ArrayList<HistoryEvent>();
     @OneToOne
     @JoinColumn(name = "invoice_id")

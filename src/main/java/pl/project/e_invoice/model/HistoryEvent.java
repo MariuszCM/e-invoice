@@ -14,11 +14,14 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-@Embeddable
+@Entity
 public class HistoryEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private EventType eventType;
     private LocalDateTime eventTime;
+    @ManyToOne
+    @JoinColumn(name = "simulation_id")
+    private Simulation simulation;
 }

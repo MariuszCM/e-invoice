@@ -2,6 +2,7 @@ package pl.project.e_invoice.model.invoice;
 
 import lombok.*;
 import pl.project.e_invoice.model.Company;
+import pl.project.e_invoice.model.Simulation;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -27,5 +28,7 @@ public class Invoice {
     @OneToOne
     @JoinColumn(name = "buyer_id")
     private Company buyer;
+    @OneToOne(mappedBy = "invoice")
+    private Simulation simulation;
 
 }
