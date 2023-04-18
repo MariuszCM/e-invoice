@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import pl.project.e_invoice.controller.CreationStageController;
+import pl.project.e_invoice.controller.MainStageController;
 
 @Component
 public class PrimaryStageInitializer implements ApplicationListener<StageReadyEvent> {
@@ -25,8 +26,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
         Stage stage = event.stage;
-        //TODO
-        Scene scene = new Scene(fxWeaver.loadView(CreationStageController.class));
+        Scene scene = new Scene(fxWeaver.loadView(MainStageController.class));
         stage.getIcons().add(new Image(PrimaryStageInitializer.class.getResourceAsStream("/logo.png")));
 
         stage.setTitle(title);

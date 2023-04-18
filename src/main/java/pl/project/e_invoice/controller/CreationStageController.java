@@ -1,21 +1,25 @@
 package pl.project.e_invoice.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import pl.project.e_invoice.model.invoice.InvoiceStatus;
 import pl.project.e_invoice.model.invoice.InvoiceType;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-@Component
+@Controller
+@RequiredArgsConstructor
 @FxmlView("CreationStage.fxml")
 public class CreationStageController {
+
+    private Stage stage;
+    private boolean isWindowOpen = false;
     @FXML
     protected Button backToMainStage;
     @FXML
@@ -50,15 +54,28 @@ public class CreationStageController {
     protected ChoiceBox<String> invoiceType;
     @FXML
     protected DatePicker invoiceIssueDate;
+    @FXML
+    private SplitPane creationSplitPane;
 
 
     @FXML
     public void initialize() {
+        if (!isWindowOpen) {
+            this.stage = new Stage();
+            stage.setTitle("title");
+            stage.setScene(new Scene(creationSplitPane));
+            isWindowOpen = true;
+        }
+
         addItemsForChoiceBoxes();
     }
 
     private void addItemsForChoiceBoxes(){
         invoiceStatus.getItems().addAll(Arrays.stream(InvoiceStatus.values()).map(InvoiceStatus::getLabel).collect(Collectors.toList()));
         invoiceType.getItems().addAll(Arrays.stream(InvoiceType.values()).map(InvoiceType::getLabel).collect(Collectors.toList()));
+    }
+
+    protected void openStage(){
+        stage.show();
     }
 }
