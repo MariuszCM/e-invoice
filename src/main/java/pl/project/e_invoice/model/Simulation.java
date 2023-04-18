@@ -2,7 +2,7 @@ package pl.project.e_invoice.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.project.e_invoice.model.invoice.Invoice;
+import pl.project.e_invoice.model.documents.Document;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ public class Simulation {
     @OneToMany(mappedBy = "simulation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HistoryEvent> history = new ArrayList<HistoryEvent>();
     @OneToOne
-    @JoinColumn(name = "invoice_id")
-    private Invoice invoice;
+    @JoinColumn(name = "document_id")
+    private Document document;
+
 }

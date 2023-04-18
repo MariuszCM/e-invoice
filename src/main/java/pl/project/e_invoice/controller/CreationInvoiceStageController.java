@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Controller;
-import pl.project.e_invoice.model.invoice.InvoiceStatus;
-import pl.project.e_invoice.model.invoice.InvoiceType;
+import pl.project.e_invoice.model.documents.InvoiceStatus;
+import pl.project.e_invoice.model.documents.InvoiceType;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
