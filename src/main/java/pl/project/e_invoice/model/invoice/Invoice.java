@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Invoice {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private InvoiceType invoiceType;
     private LocalDateTime dateOfIssue;
     private BigDecimal value;
