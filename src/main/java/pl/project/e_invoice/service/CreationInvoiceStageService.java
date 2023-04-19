@@ -11,7 +11,7 @@ import pl.project.e_invoice.model.documents.Invoice;
 @Slf4j
 @AllArgsConstructor
 public class CreationInvoiceStageService implements CreationService{
-    
+
     //TODO
 
 }

@@ -60,19 +60,22 @@ public class CreationInvoiceStageController {
 
     @FXML
     public void initialize() {
-        if (!isWindowOpen) {
-            this.stage = new Stage();
-            stage.setTitle("title");
-            stage.setScene(new Scene(creationSplitPane));
-            isWindowOpen = true;
-        }
-
+        stageCreationIfNotOpen();
         addItemsForChoiceBoxes();
     }
 
     private void addItemsForChoiceBoxes(){
         invoiceStatus.getItems().addAll(Arrays.stream(InvoiceStatus.values()).map(InvoiceStatus::getLabel).collect(Collectors.toList()));
         invoiceType.getItems().addAll(Arrays.stream(InvoiceType.values()).map(InvoiceType::getLabel).collect(Collectors.toList()));
+    }
+
+    private void stageCreationIfNotOpen() {
+        if (!isWindowOpen) {
+            this.stage = new Stage();
+            stage.setTitle("Create New InVoice");
+            stage.setScene(new Scene(creationSplitPane));
+            isWindowOpen = true;
+        }
     }
 
     protected void openStage(){
