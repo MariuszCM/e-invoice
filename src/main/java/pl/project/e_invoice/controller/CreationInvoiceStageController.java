@@ -25,8 +25,6 @@ public class CreationInvoiceStageController {
     private Simulation sim;
     private boolean isWindowOpen = false;
     @FXML
-    protected Button backToMainStage;
-    @FXML
     protected Button saveInvoice;
     @FXML
     protected Button searchCompany;
