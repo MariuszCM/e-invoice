@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import pl.project.e_invoice.model.documents.Document;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,4 +22,20 @@ public class Simulation {
     @JoinColumn(name = "document_id")
     private Document document;
 
+    public static HistoryEvent addStandardEvent(Simulation sim, EventType eventType) {
+        HistoryEvent event = HistoryEvent.builder()
+                .eventTime(LocalDateTime.now())
+                .eventType(eventType)
+                .simulation(sim)
+                .build();
+        sim.getHistory().add(event);
+        return event;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "document = " + document + ")";
+    }
 }

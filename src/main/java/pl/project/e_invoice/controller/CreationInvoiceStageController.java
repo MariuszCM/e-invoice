@@ -7,8 +7,10 @@ import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Controller;
+import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.model.documents.InvoiceStatus;
 import pl.project.e_invoice.model.documents.InvoiceType;
+import pl.project.e_invoice.service.DefaultSimulationService;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 public class CreationInvoiceStageController {
 
     private Stage stage;
+    private final DefaultSimulationService simulationService;
+    private Simulation sim;
     private boolean isWindowOpen = false;
     @FXML
     protected Button backToMainStage;
@@ -70,12 +74,17 @@ public class CreationInvoiceStageController {
     }
 
     private void stageCreationIfNotOpen() {
-        if (!isWindowOpen) {
+        if (!this.isWindowOpen) {
             this.stage = new Stage();
-            stage.setTitle("Create New InVoice");
-            stage.setScene(new Scene(creationSplitPane));
-            isWindowOpen = true;
+            this.stage.setTitle("Create New InVoice");
+            this.stage.setScene(new Scene(creationSplitPane));
+            simulationCreation();
+            this.isWindowOpen = true;
         }
+    }
+
+    private void simulationCreation() {
+        this.sim = this.simulationService.createSimulation();
     }
 
     protected void openStage(){
