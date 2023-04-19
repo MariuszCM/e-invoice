@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.model.documents.InvoiceStatus;
 import pl.project.e_invoice.model.documents.InvoiceType;
+import pl.project.e_invoice.service.CreationInvoiceStageService;
 import pl.project.e_invoice.service.DefaultSimulationService;
 
 import java.util.Arrays;
@@ -22,6 +23,7 @@ public class CreationInvoiceStageController {
 
     private Stage stage;
     private final DefaultSimulationService simulationService;
+    private final CreationInvoiceStageService invoiceStageService;
     private Simulation sim;
     private boolean isWindowOpen = false;
     @FXML
@@ -64,6 +66,7 @@ public class CreationInvoiceStageController {
     public void initialize() {
         stageCreationIfNotOpen();
         addItemsForChoiceBoxes();
+        handleButtonEvents();
     }
 
     private void addItemsForChoiceBoxes(){
@@ -83,6 +86,11 @@ public class CreationInvoiceStageController {
 
     private void simulationCreation() {
         this.sim = this.simulationService.createSimulation();
+    }
+
+    private void handleButtonEvents() {
+        //TODO dorobic implementacje
+        this.saveInvoice.setOnAction(event -> this.invoiceStageService.createDocument(this.sim));
     }
 
     protected void openStage(){
