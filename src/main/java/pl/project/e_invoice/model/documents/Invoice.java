@@ -7,7 +7,7 @@ import pl.project.e_invoice.model.Simulation;
 import javax.persistence.*;
 
 @Data
-@EqualsAndHashCode()
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @SuperBuilder
 @AllArgsConstructor

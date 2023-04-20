@@ -4,5 +4,5 @@ import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.model.documents.Document;
 
 public interface CreationService {
-    Document createDocument(Simulation sim);
+    void createDocument(Document document);
 }

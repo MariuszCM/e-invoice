@@ -22,7 +22,7 @@ public class Simulation {
     @JoinColumn(name = "document_id")
     private Document document;
 
-    public static HistoryEvent addStandardEvent(Simulation sim, EventType eventType) {
+    public static HistoryEvent addStandardEventToHistory(Simulation sim, EventType eventType) {
         HistoryEvent event = HistoryEvent.builder()
                 .eventTime(LocalDateTime.now())
                 .eventType(eventType)

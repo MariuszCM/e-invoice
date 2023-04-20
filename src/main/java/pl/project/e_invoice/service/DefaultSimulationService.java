@@ -16,10 +16,11 @@ public class DefaultSimulationService implements SimulationService{
     @Override
     public Simulation createSimulation() {
         Simulation sim = new Simulation();
-        Simulation.addStandardEvent(sim, EventType.SIMUlATION_CREATION);
+        Simulation.addStandardEventToHistory(sim, EventType.SIMUlACTION_CREATION);
         simulationRepository.save(sim);
         log.info("{} just created", sim);
-        return null;
+
+        return sim;
     }
 
 

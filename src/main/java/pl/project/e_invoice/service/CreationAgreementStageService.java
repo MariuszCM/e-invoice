@@ -1,6 +1,5 @@
 package pl.project.e_invoice.service;
 
-import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.model.documents.Document;
 
 public class CreationAgreementStageService implements CreationService {
@@ -10,9 +9,8 @@ public class CreationAgreementStageService implements CreationService {
      */
 
     @Override
-    public Document createDocument(Simulation sim) {
+    public void createDocument(Document sim) {
         illegalOperation();
-        return null;
     }
 
     private void illegalOperation() {
