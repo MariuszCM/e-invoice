@@ -7,7 +7,6 @@ import javax.persistence.Id;
 
 @Data
 @EqualsAndHashCode()
-@ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -17,4 +16,14 @@ public class Company {
     private String companyName;
     private String address;
     private String email;
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "nip='" + nip + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

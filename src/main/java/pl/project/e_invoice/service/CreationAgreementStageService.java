@@ -9,8 +9,9 @@ public class CreationAgreementStageService implements CreationService {
      */
 
     @Override
-    public void createDocument(Document sim) {
+    public Document createDocument(Document sim) {
         illegalOperation();
+        return null;
     }
 
     private void illegalOperation() {

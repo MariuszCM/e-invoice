@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,4 +20,11 @@ public class Invoice extends Document{
     @OneToOne(mappedBy = "document")
     private Simulation simulation;
 
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "invoiceType=" + invoiceType +
+                ", invoiceStatus=" + invoiceStatus +
+                '}';
+    }
 }

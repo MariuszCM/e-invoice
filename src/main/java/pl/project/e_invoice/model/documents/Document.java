@@ -3,6 +3,7 @@ package pl.project.e_invoice.model.documents;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import pl.project.e_invoice.model.Company;
 
@@ -28,12 +29,15 @@ public abstract class Document {
     @JoinColumn(name = "buyer_id")
     private Company buyer;
 
-    public static <T> BigDecimal convertToBigDecimal(T value) {
-        if (value instanceof String) {
-            return new BigDecimal((String) value);
-        } else {
-            throw new IllegalArgumentException("Value is not a String");
-        }
+    @Override
+    public String toString() {
+        return "Document{" +
+                "id='" + id + '\'' +
+                ", dateOfIssue=" + dateOfIssue +
+                ", value=" + value +
+                ", name='" + name + '\'' +
+                ", seller=" + seller +
+                ", buyer=" + buyer +
+                '}';
     }
-
 }

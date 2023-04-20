@@ -2,12 +2,10 @@ package pl.project.e_invoice.model.documents;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.function.Function;
 
 @AllArgsConstructor
-@ToString
 @Getter
 public enum InvoiceType {
     INCOME("WCAX001", "Przychodząca"),
@@ -25,5 +23,13 @@ public enum InvoiceType {
             }
             throw new IllegalArgumentException("Illegal invoice type: " + statusString);
         };
+    }
+
+    @Override
+    public String toString() {
+        return "InvoiceType{" +
+                "emailTemplateCode='" + emailTemplateCode + '\'' +
+                ", label='" + label + '\'' +
+                '}';
     }
 }

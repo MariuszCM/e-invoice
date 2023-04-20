@@ -1,6 +1,6 @@
 package pl.project.e_invoice.model;
 
 public enum EventType {
-    SIMUlACTION_CREATION,
+    SIMUlACTION_CREATED,
     INVOICE_CREATED
 }

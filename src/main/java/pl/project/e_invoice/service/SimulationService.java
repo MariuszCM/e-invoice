@@ -4,4 +4,5 @@ import pl.project.e_invoice.model.Simulation;
 
 public interface SimulationService {
     Simulation createSimulation();
+    Simulation saveAndRefreshSimulation(Simulation simulation);
 }

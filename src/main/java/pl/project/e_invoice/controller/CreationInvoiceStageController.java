@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Controller;
 import pl.project.e_invoice.model.Company;
-import pl.project.e_invoice.model.EventType;
 import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.model.documents.Invoice;
 import pl.project.e_invoice.model.documents.InvoiceStatus;
 import pl.project.e_invoice.model.documents.InvoiceType;
 import pl.project.e_invoice.service.CreationInvoiceService;
+import pl.project.e_invoice.service.DefaultCompanyService;
 import pl.project.e_invoice.service.DefaultSimulationService;
 
 import java.math.BigDecimal;
@@ -30,6 +30,7 @@ public class CreationInvoiceStageController {
 
     private final DefaultSimulationService simulationService;
     private final CreationInvoiceService invoiceService;
+    private final DefaultCompanyService companyService;
     @FXML
     protected Button saveInvoice;
     @FXML
@@ -129,6 +130,10 @@ public class CreationInvoiceStageController {
             this.buyer = new Company();
             this.invoice = new Invoice();
             this.isWindowOpen = true;
+            invoice.setSimulation(sim);
+            invoice.setSeller(seller);
+            invoice.setBuyer(buyer);
+            sim.setDocument(invoice);
         }
     }
 
@@ -141,11 +146,14 @@ public class CreationInvoiceStageController {
     }
 
     private void saveInvoice() {
-        invoice.setSimulation(sim);
-        invoice.setSeller(seller);
-        invoice.setBuyer(buyer);
-        sim.setDocument(invoice);
+        getCompanyIfExistOrCreate(seller);
+        getCompanyIfExistOrCreate(buyer);
         invoiceService.createDocument(invoice);
+        stage.close();
+    }
+
+    private void getCompanyIfExistOrCreate(Company company){
+        companyService.findOrUpdateCompanyIfChanged(company);
     }
 
     protected void openStage() {

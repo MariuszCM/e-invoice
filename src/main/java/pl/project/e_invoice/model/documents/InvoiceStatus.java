@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@ToString
 @AllArgsConstructor
 @Getter
 public enum InvoiceStatus {
@@ -27,5 +26,13 @@ public enum InvoiceStatus {
             }
             throw new IllegalArgumentException("Illegal invoice status: " + statusString);
         };
+    }
+
+    @Override
+    public String toString() {
+        return "InvoiceStatus{" +
+                "emailTemplateCode='" + emailTemplateCode + '\'' +
+                ", label='" + label + '\'' +
+                '}';
     }
 }
