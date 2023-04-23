@@ -1,3 +1,5 @@
 regon-api:
   url: 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
   key: 'abcde12345abcde12345'
+company:
+  nip: '7780045529'

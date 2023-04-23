@@ -6,9 +6,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import pl.project.e_invoice.integration.regonApi.model.CompanyIntegration;
-import pl.project.e_invoice.service.integration.NipApiService;
 import pl.project.e_invoice.model.Company;
 import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.model.documents.Invoice;
@@ -17,6 +17,7 @@ import pl.project.e_invoice.model.documents.InvoiceType;
 import pl.project.e_invoice.service.CreationInvoiceService;
 import pl.project.e_invoice.service.DefaultCompanyService;
 import pl.project.e_invoice.service.DefaultSimulationService;
+import pl.project.e_invoice.service.integration.NipApiService;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -68,21 +69,23 @@ public class CreationInvoiceStageController {
     protected ChoiceBox<String> invoiceType;
     @FXML
     protected DatePicker invoiceIssueDate;
+    @FXML
+    private SplitPane creationSplitPane;
     private Stage stage;
     private Simulation sim;
     private Invoice invoice;
     private Company seller;
     private Company buyer;
+    @Value("${company.nip}")
+    private String myCompanyNip;
     private boolean isWindowOpen = false;
-    @FXML
-    private SplitPane creationSplitPane;
 
 
     @FXML
     public void initialize() {
         stageCreationIfNotOpen();
         addItemsForChoiceBoxes();
-        addHandlersForButtons();
+        addHandlers();
         addListenersForFields();
     }
 
@@ -144,20 +147,44 @@ public class CreationInvoiceStageController {
         this.sim = this.simulationService.createSimulation();
     }
 
+    private void addHandlers() {
+        addHandlersForButtons();
+        addHandlersForChoiceBoxes();
+    }
+
+    private void addHandlersForChoiceBoxes() {
+        this.invoiceType.setOnAction(event -> setMyCompanyNipForField());
+    }
+
     private void addHandlersForButtons() {
         this.saveInvoice.setOnAction(event -> saveInvoice());
         this.searchCompany.setOnAction(event -> searchCompanyByApi());
     }
 
-    private void searchCompanyByApi() {
-        CompanyIntegration companyFromApi = regonApiPromptService.getFullCompanyReport(buyerNip.textProperty().get());
-        buyerName.textProperty().setValue(companyFromApi.getCompanyName());
-        if (companyFromApi.getStreet() != null && companyFromApi.getCity() != null) {
-            buyerAddress.textProperty().setValue(companyFromApi.getStreet() + " " + companyFromApi.getCity());
-        } else {
-            buyerAddress.textProperty().setValue(null);
+    private void setMyCompanyNipForField() {
+        if (InvoiceType.convertLabelTOEnum().apply(invoiceType.getValue()) == InvoiceType.INCOME) {
+            buyerNip.textProperty().setValue(myCompanyNip);
+            sellerNip.textProperty().setValue(null);
+        } else if (InvoiceType.convertLabelTOEnum().apply(invoiceType.getValue()) == InvoiceType.OUTCOME) {
+            buyerNip.textProperty().setValue(null);
+            sellerNip.textProperty().setValue(myCompanyNip);
         }
-        buyerEmail.textProperty().setValue(companyFromApi.getEmail());
+    }
+
+    private void searchCompanyByApi() {
+        searchAndSetCompanyFields(buyerNip, buyerName, buyerAddress, buyerEmail);
+        searchAndSetCompanyFields(sellerNip, sellerName, sellerAddress, sellerEmail);
+    }
+
+    private void searchAndSetCompanyFields(TextField nipField, TextField nameField, TextField addressField, TextField emailField) {
+        CompanyIntegration companyFromApi = regonApiPromptService.getFullCompanyReport(nipField.textProperty().get());
+        nameField.textProperty().setValue(companyFromApi.getCompanyName());
+        if (companyFromApi.getStreet() != null && companyFromApi.getCity() != null) {
+            addressField.textProperty().setValue(companyFromApi.getStreet() + " " + companyFromApi.getCity());
+        } else {
+            addressField.textProperty().setValue(null);
+        }
+        emailField.textProperty().setValue(companyFromApi.getEmail());
     }
 
     private void saveInvoice() {
