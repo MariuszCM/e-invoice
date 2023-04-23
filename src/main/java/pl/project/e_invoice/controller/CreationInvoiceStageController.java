@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Controller;
+import pl.project.e_invoice.integration.regonApi.model.CompanyIntegration;
+import pl.project.e_invoice.service.integration.NipApiService;
 import pl.project.e_invoice.model.Company;
 import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.model.documents.Invoice;
@@ -31,6 +33,7 @@ public class CreationInvoiceStageController {
     private final DefaultSimulationService simulationService;
     private final CreationInvoiceService invoiceService;
     private final DefaultCompanyService companyService;
+    private final NipApiService regonApiPromptService;
     @FXML
     protected Button saveInvoice;
     @FXML
@@ -96,21 +99,21 @@ public class CreationInvoiceStageController {
         addListenersForInvoice();
     }
 
-    private void addListenersForBuyer(){
+    private void addListenersForBuyer() {
         addListenerToProperty(buyerNip.textProperty(), buyer::setNip);
         addListenerToProperty(buyerName.textProperty(), buyer::setCompanyName);
         addListenerToProperty(buyerAddress.textProperty(), buyer::setAddress);
         addListenerToProperty(buyerEmail.textProperty(), buyer::setEmail);
     }
 
-    private void addListenersForSeller(){
+    private void addListenersForSeller() {
         addListenerToProperty(sellerNip.textProperty(), seller::setNip);
         addListenerToProperty(sellerName.textProperty(), seller::setCompanyName);
         addListenerToProperty(sellerAddress.textProperty(), seller::setAddress);
         addListenerToProperty(sellerEmail.textProperty(), seller::setEmail);
     }
 
-    private void addListenersForInvoice(){
+    private void addListenersForInvoice() {
         addListenerToProperty(invoiceId.textProperty(), invoice::setId);
         addListenerToProperty(invoiceName.textProperty(), invoice::setName);
         addListenerToProperty(amount.textProperty(), BigDecimal::new, invoice::setValue);
@@ -143,16 +146,29 @@ public class CreationInvoiceStageController {
 
     private void addHandlersForButtons() {
         this.saveInvoice.setOnAction(event -> saveInvoice());
+        this.searchCompany.setOnAction(event -> searchCompanyByApi());
+    }
+
+    private void searchCompanyByApi() {
+        CompanyIntegration companyFromApi = regonApiPromptService.getFullCompanyReport(buyerNip.textProperty().get());
+        buyerName.textProperty().setValue(companyFromApi.getCompanyName());
+        if (companyFromApi.getStreet() != null && companyFromApi.getCity() != null) {
+            buyerAddress.textProperty().setValue(companyFromApi.getStreet() + " " + companyFromApi.getCity());
+        } else {
+            buyerAddress.textProperty().setValue(null);
+        }
+        buyerEmail.textProperty().setValue(companyFromApi.getEmail());
     }
 
     private void saveInvoice() {
         getCompanyIfExistOrCreate(seller);
         getCompanyIfExistOrCreate(buyer);
         invoiceService.createDocument(invoice);
+        isWindowOpen = false;
         stage.close();
     }
 
-    private void getCompanyIfExistOrCreate(Company company){
+    private void getCompanyIfExistOrCreate(Company company) {
         companyService.findOrUpdateCompanyIfChanged(company);
     }
 

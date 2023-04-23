@@ -22,6 +22,7 @@ public class MainStageController {
     @FXML
     public void initialize(){
         openCreationStage.setOnAction(event -> creationStageControllerSplitPane.getController().openStage());
+        openCreationStage.setOnAction(event -> creationStageControllerSplitPane.getController().openStage());
     }
 
 }
