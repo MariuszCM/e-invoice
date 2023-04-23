@@ -9,15 +9,15 @@ import java.util.function.Function;
 
 public class ControllerHelper {
     public static <T> void addListenerToProperty(Property<T> property, Consumer<T> listener) {
-        property.addListener((observable, oldValue, newValue) -> {
-            listener.accept(newValue);
-        });
+        property.addListener((observable, oldValue, newValue) -> listener.accept(newValue));
     }
 
     public static <T, E> void addListenerToProperty(Property<T> property, Function<T, E> converter, Consumer<E> listener) {
         property.addListener((observable, oldValue, newValue) -> {
-            var convertedVal = converter.apply(newValue);
-            listener.accept(convertedVal);
+            if(newValue != null && !newValue.toString().equals("")) {
+                var convertedVal = converter.apply(newValue);
+                listener.accept(convertedVal);
+            }
         });
     }
 
