@@ -1,13 +1,16 @@
 package pl.project.e_invoice.controller;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import pl.project.e_invoice.application.PrimaryStageInitializer;
 import pl.project.e_invoice.integration.regonApi.model.CompanyIntegration;
 import pl.project.e_invoice.model.Company;
 import pl.project.e_invoice.model.Simulation;
@@ -87,6 +90,16 @@ public class CreationInvoiceStageController {
         addItemsForChoiceBoxes();
         addHandlers();
         addListenersForFields();
+        addDisableForButtons();
+    }
+
+    private void addDisableForButtons() {
+        saveInvoice.disableProperty().bind(
+                Bindings.isEmpty(sellerNip.textProperty())
+                        .or(Bindings.isEmpty(buyerNip.textProperty()))
+                        .or(Bindings.isEmpty(invoiceId.textProperty()))
+                        .or(Bindings.isEmpty(amount.textProperty()))
+        );
     }
 
     private void addItemsForChoiceBoxes() {
@@ -129,8 +142,10 @@ public class CreationInvoiceStageController {
     private void stageCreationIfNotOpen() {
         if (!this.isWindowOpen) {
             this.stage = new Stage();
-            this.stage.setTitle("Create New InVoice");
+            this.stage.setTitle("Utwórz nową fakturę");
+            this.stage.getIcons().add(new Image(PrimaryStageInitializer.class.getResourceAsStream("/logo.png")));
             this.stage.setScene(new Scene(creationSplitPane));
+
             simulationCreation();
             this.seller = new Company();
             this.buyer = new Company();
