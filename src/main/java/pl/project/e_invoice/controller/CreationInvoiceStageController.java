@@ -100,6 +100,7 @@ public class CreationInvoiceStageController {
                         .or(Bindings.isEmpty(invoiceId.textProperty()))
                         .or(Bindings.isEmpty(amount.textProperty()))
         );
+        stage.setOnCloseRequest(event -> isWindowOpen = false);
     }
 
     private void addItemsForChoiceBoxes() {

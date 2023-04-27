@@ -5,7 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxControllerAndView;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
+import net.rgielen.fxweaver.core.LazyFxControllerAndView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -16,13 +20,18 @@ public class MainStageController {
     protected Button openCreationStage;
     @FXML
     protected Button openBrowseStage;
-
-    private final FxControllerAndView<CreationInvoiceStageController, SplitPane> creationStageControllerSplitPane;
+    @Autowired
+    private FxWeaver fxWeaver;
+    private FxControllerAndView<CreationInvoiceStageController, SplitPane> creationStageControllerSplitPane;
+    private final CreationInvoiceStageController controller;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         openCreationStage.setOnAction(event -> creationStageControllerSplitPane.getController().openStage());
-        openCreationStage.setOnAction(event -> creationStageControllerSplitPane.getController().openStage());
+        openCreationStage.setOnAction(event -> {
+            creationStageControllerSplitPane = new LazyFxControllerAndView(() -> this.fxWeaver.load(controller.getClass()));
+            creationStageControllerSplitPane.getController().openStage();
+        });
     }
 
 }
