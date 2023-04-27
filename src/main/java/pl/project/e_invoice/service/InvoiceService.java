@@ -8,10 +8,12 @@ import pl.project.e_invoice.model.documents.Document;
 import pl.project.e_invoice.model.documents.Invoice;
 import pl.project.e_invoice.repository.InvoiceRepository;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @AllArgsConstructor
-public class CreationInvoiceService implements CreationService {
+public class InvoiceService implements DocumentService {
     private InvoiceRepository invoiceRepository;
     private DefaultSimulationService defaultSimulationService;
 
@@ -25,5 +27,10 @@ public class CreationInvoiceService implements CreationService {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public List<Invoice> findAll() {
+        return invoiceRepository.findAll();
     }
 }

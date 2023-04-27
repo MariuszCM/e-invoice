@@ -17,7 +17,7 @@ import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.model.documents.Invoice;
 import pl.project.e_invoice.model.documents.InvoiceStatus;
 import pl.project.e_invoice.model.documents.InvoiceType;
-import pl.project.e_invoice.service.CreationInvoiceService;
+import pl.project.e_invoice.service.InvoiceService;
 import pl.project.e_invoice.service.DefaultCompanyService;
 import pl.project.e_invoice.service.DefaultSimulationService;
 import pl.project.e_invoice.service.integration.NipApiService;
@@ -35,7 +35,7 @@ import static pl.project.e_invoice.controller.ControllerHelper.addListenerToProp
 public class CreationInvoiceStageController {
 
     private final DefaultSimulationService simulationService;
-    private final CreationInvoiceService invoiceService;
+    private final InvoiceService invoiceService;
     private final DefaultCompanyService companyService;
     private final NipApiService regonApiPromptService;
     @FXML
