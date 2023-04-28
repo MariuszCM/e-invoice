@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane fx:id="creationSplitPane" dividerPositions="0.22917352650642075" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.project.e_invoice.controller.CreationInvoiceStageController">
+<SplitPane fx:id="creationSplitPane" dividerPositions="0.22917352650642075" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.project.e_invoice.controller.UpdateInvoiceStageController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="719.0" prefWidth="122.0" style="-fx-background-color: #A1C2E1;" />
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="719.0" prefWidth="607.0" style="-fx-background-color: #D9E4F3;">

@@ -10,7 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
+import net.rgielen.fxweaver.core.FxControllerAndView;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
+import net.rgielen.fxweaver.core.LazyFxControllerAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -47,10 +50,16 @@ public class ListInvoiceStageController {
     @FXML
     private Button closeButton;
     @FXML
+    private Button editButton;
+    @FXML
     private SplitPane listSplitPane;
     @Autowired
     private InvoiceListener invoiceListener;
     private Stage stage;
+    @Autowired
+    private FxWeaver fxWeaver;
+    private FxControllerAndView<UpdateInvoiceStageController, SplitPane> updateStageControllerSplitPane;
+    private final UpdateInvoiceStageController updateInvoiceStageController;
     private ObservableList<Invoice> data;
     private boolean isWindowOpen = false;
     private String title = "";
@@ -70,11 +79,14 @@ public class ListInvoiceStageController {
         displayInvoices();
         setScrollBar(invoiceTableView);
         addEventHandlers();
-
     }
-
     private void addEventHandlers() {
         closeButton.setOnAction(actionEvent -> stage.hide());
+        editButton.setOnAction(event -> {
+            updateStageControllerSplitPane = new LazyFxControllerAndView(() -> this.fxWeaver.load(updateInvoiceStageController.getClass()));
+            Invoice currentInvoice = invoiceTableView.getSelectionModel().getSelectedItem();
+            updateStageControllerSplitPane.getController().openStage(currentInvoice);
+        });
         invoiceListener.addListener((invoice, notifyType) -> {
             if (notifyType == DatabaseListenerType.CREATE) {
                 data.add(invoice);
@@ -83,7 +95,8 @@ public class ListInvoiceStageController {
             } else if (notifyType == DatabaseListenerType.UPDATE) {
                 //TODO usprawnic optymalizacje algorytmu
                 data.removeAll();
-                data.addAll(invoiceService.findAll());
+                List<Invoice> all = invoiceService.findAll();
+                data.addAll(all);
             } else {
                 throw new IllegalStateException("Not supported notifyType");
             }

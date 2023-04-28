@@ -23,12 +23,12 @@ public class MainStageController {
     private FxWeaver fxWeaver;
     private FxControllerAndView<CreationInvoiceStageController, SplitPane> creationStageControllerSplitPane;
     private final FxControllerAndView<ListInvoiceStageController, SplitPane> listStageControllerSplitPane;
-    private final CreationInvoiceStageController controller;
+    private final CreationInvoiceStageController creationInvoiceController;
 
     @FXML
     public void initialize() {
         openCreationStage.setOnAction(event -> {
-            creationStageControllerSplitPane = new LazyFxControllerAndView(() -> this.fxWeaver.load(controller.getClass()));
+            creationStageControllerSplitPane = new LazyFxControllerAndView(() -> this.fxWeaver.load(creationInvoiceController.getClass()));
             creationStageControllerSplitPane.getController().openStage();
         });
         openBrowseStage.setOnAction(event -> listStageControllerSplitPane.getController().openStage());

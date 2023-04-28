@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,9 @@ import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.model.documents.Invoice;
 import pl.project.e_invoice.model.documents.InvoiceStatus;
 import pl.project.e_invoice.model.documents.InvoiceType;
-import pl.project.e_invoice.service.InvoiceService;
 import pl.project.e_invoice.service.DefaultCompanyService;
 import pl.project.e_invoice.service.DefaultSimulationService;
+import pl.project.e_invoice.service.InvoiceService;
 import pl.project.e_invoice.service.integration.NipApiService;
 
 import java.math.BigDecimal;
@@ -33,8 +34,9 @@ import static pl.project.e_invoice.controller.ControllerHelper.addListenerToProp
 
 @Controller
 @RequiredArgsConstructor
-@FxmlView("CreationStage.fxml")
-public class CreationInvoiceStageController {
+@FxmlView("UpdateStage.fxml")
+//TODO fecator i wyniesienie do abstrakcji !!!
+public class UpdateInvoiceStageController {
 
     private final DefaultSimulationService simulationService;
     private final InvoiceService invoiceService;
@@ -80,6 +82,7 @@ public class CreationInvoiceStageController {
     private Text header;
     private Stage stage;
     private Simulation sim;
+    @Setter
     private Invoice invoice;
     private Company seller;
     private Company buyer;
@@ -93,8 +96,6 @@ public class CreationInvoiceStageController {
         stageCreationIfNotOpen();
         addItemsForChoiceBoxes();
         addHandlers();
-        addListenersForFields();
-        addDisableForButtons();
     }
 
     private void addDisableForButtons() {
@@ -104,6 +105,8 @@ public class CreationInvoiceStageController {
                         .or(Bindings.isEmpty(invoiceId.textProperty()))
                         .or(Bindings.isEmpty(amount.textProperty()))
         );
+        //nie chcemy aby ktos zmianial numer faktury
+        invoiceId.setDisable(true);
     }
 
     private void addItemsForChoiceBoxes() {
@@ -146,49 +149,22 @@ public class CreationInvoiceStageController {
     private void stageCreationIfNotOpen() {
         if (!this.isWindowOpen) {
             this.stage = new Stage();
-            this.stage.setTitle("Utwórz nową fakturę");
+            this.stage.setTitle("Zmiany w fakturze");
+            this.header.setText("Wprowadzanie zmian w fakturze");
             this.stage.getIcons().add(new Image(Objects.requireNonNull(PrimaryStageInitializer.class.getResourceAsStream("/logo.png"))));
             this.stage.setScene(new Scene(creationSplitPane));
-
-            simulationCreation();
-            this.seller = new Company();
-            this.buyer = new Company();
-            this.invoice = new Invoice();
             this.isWindowOpen = true;
-            invoice.setSimulation(sim);
-            invoice.setSeller(seller);
-            invoice.setBuyer(buyer);
-            sim.setDocument(invoice);
         }
-    }
-
-    private void simulationCreation() {
-        this.sim = this.simulationService.createSimulation();
     }
 
     private void addHandlers() {
         addHandlersForButtons();
-        addHandlersForChoiceBoxes();
         stage.setOnCloseRequest(event -> isWindowOpen = false);
-    }
-
-    private void addHandlersForChoiceBoxes() {
-        this.invoiceType.setOnAction(event -> setMyCompanyNipForField());
     }
 
     private void addHandlersForButtons() {
         this.saveInvoice.setOnAction(event -> saveInvoice());
         this.searchCompany.setOnAction(event -> searchCompanyByApi());
-    }
-
-    private void setMyCompanyNipForField() {
-        if (InvoiceType.convertLabelTOEnum().apply(invoiceType.getValue()) == InvoiceType.INCOME) {
-            buyerNip.textProperty().setValue(myCompanyNip);
-            sellerNip.textProperty().setValue(null);
-        } else if (InvoiceType.convertLabelTOEnum().apply(invoiceType.getValue()) == InvoiceType.OUTCOME) {
-            buyerNip.textProperty().setValue(null);
-            sellerNip.textProperty().setValue(myCompanyNip);
-        }
     }
 
     private void searchCompanyByApi() {
@@ -212,6 +188,7 @@ public class CreationInvoiceStageController {
         getCompanyIfExistOrCreate(buyer);
         invoiceService.createDocument(invoice);
         isWindowOpen = false;
+        //TODO odlozyc zdarzeniu o aktualizacji
         stage.close();
     }
 
@@ -219,7 +196,33 @@ public class CreationInvoiceStageController {
         companyService.findOrUpdateCompanyIfChanged(company);
     }
 
-    protected void openStage() {
+    protected void openStage(Invoice invoice) {
+        this.invoice = invoice;
+        this.sim = invoice.getSimulation();
+        this.seller = invoice.getSeller();
+        this.buyer = invoice.getBuyer();
+        addListenersForFields();
+        addDisableForButtons();
+        fillDataToFields();
         stage.show();
+    }
+
+    private void fillDataToFields() {
+        invoiceId.setText(invoice.getId());
+        invoiceType.setValue(invoice.getInvoiceType() != null ? invoice.getInvoiceType().getLabel() : null);
+        invoiceStatus.setValue(invoice.getInvoiceStatus() != null ? invoice.getInvoiceStatus().getLabel() : null);
+        invoiceIssueDate.setValue(invoice.getDateOfIssue());
+        invoiceName.setText(invoice.getName());
+        amount.setText(invoice.getValue() != null ? invoice.getValue().toString() : null);
+
+        sellerNip.setText(seller.getNip());
+        sellerAddress.setText(seller.getAddress());
+        sellerName.setText(seller.getCompanyName());
+        sellerEmail.setText(seller.getEmail());
+
+        buyerNip.setText(buyer.getNip());
+        buyerAddress.setText(buyer.getAddress());
+        buyerName.setText(buyer.getCompanyName());
+        buyerEmail.setText(buyer.getEmail());
     }
 }
