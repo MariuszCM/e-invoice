@@ -3,6 +3,7 @@ package pl.project.e_invoice.model.documents;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import pl.project.e_invoice.model.Simulation;
+import pl.project.e_invoice.model.listeners.InvoiceDatabaseListener;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EntityListeners(InvoiceDatabaseListener.class)
 public class Invoice extends Document{
 
     private InvoiceType invoiceType;

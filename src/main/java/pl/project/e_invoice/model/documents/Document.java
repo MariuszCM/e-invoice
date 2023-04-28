@@ -3,7 +3,6 @@ package pl.project.e_invoice.model.documents;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import pl.project.e_invoice.model.Company;
 

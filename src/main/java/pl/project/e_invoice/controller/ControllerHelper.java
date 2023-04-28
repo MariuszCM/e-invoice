@@ -14,14 +14,14 @@ public class ControllerHelper {
 
     public static <T, E> void addListenerToProperty(Property<T> property, Function<T, E> converter, Consumer<E> listener) {
         property.addListener((observable, oldValue, newValue) -> {
-            if(newValue != null && !newValue.toString().equals("")) {
+            if (newValue != null && !newValue.toString().equals("")) {
                 var convertedVal = converter.apply(newValue);
                 listener.accept(convertedVal);
             }
         });
     }
 
-    public static <T, E extends  Enum<E>> void addListenerToChoiceBox(ChoiceBox<T> choiceBox, Function<T, E> converter, Consumer<E> listener) {
+    public static <T, E extends Enum<E>> void addListenerToChoiceBox(ChoiceBox<T> choiceBox, Function<T, E> converter, Consumer<E> listener) {
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             E enumValue = converter.apply(newValue);
             listener.accept(enumValue);
