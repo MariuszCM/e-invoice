@@ -7,5 +7,6 @@ import java.util.List;
 public interface DocumentService {
     //TODO poprawa na generyki
     Document createDocument(Document document);
+    Document updateDocument(Document document);
     <T extends Document> List<T> findAll();
 }

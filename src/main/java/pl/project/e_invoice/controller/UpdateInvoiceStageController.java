@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import pl.project.e_invoice.application.PrimaryStageInitializer;
 import pl.project.e_invoice.integration.regonApi.model.CompanyIntegration;
@@ -37,8 +36,6 @@ import static pl.project.e_invoice.controller.ControllerHelper.addListenerToProp
 @FxmlView("UpdateStage.fxml")
 //TODO fecator i wyniesienie do abstrakcji !!!
 public class UpdateInvoiceStageController {
-
-    private final DefaultSimulationService simulationService;
     private final InvoiceService invoiceService;
     private final DefaultCompanyService companyService;
     private final NipApiService regonApiPromptService;
@@ -86,10 +83,7 @@ public class UpdateInvoiceStageController {
     private Invoice invoice;
     private Company seller;
     private Company buyer;
-    @Value("${company.nip}")
-    private String myCompanyNip;
     private boolean isWindowOpen = false;
-
 
     @FXML
     public void initialize() {
@@ -186,7 +180,7 @@ public class UpdateInvoiceStageController {
     private void saveInvoice() {
         getCompanyIfExistOrCreate(seller);
         getCompanyIfExistOrCreate(buyer);
-        invoiceService.createDocument(invoice);
+        invoiceService.updateDocument(invoice);
         isWindowOpen = false;
         //TODO odlozyc zdarzeniu o aktualizacji
         stage.close();

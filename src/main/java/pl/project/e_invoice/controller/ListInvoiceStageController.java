@@ -31,6 +31,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ListInvoiceStageController {
     private final InvoiceService invoiceService;
+    private final UpdateInvoiceStageController updateInvoiceStageController;
     @FXML
     protected TableView<Invoice> invoiceTableView = new TableView<>();
     @FXML
@@ -59,7 +60,6 @@ public class ListInvoiceStageController {
     @Autowired
     private FxWeaver fxWeaver;
     private FxControllerAndView<UpdateInvoiceStageController, SplitPane> updateStageControllerSplitPane;
-    private final UpdateInvoiceStageController updateInvoiceStageController;
     private ObservableList<Invoice> data;
     private boolean isWindowOpen = false;
     private String title = "";
@@ -80,6 +80,7 @@ public class ListInvoiceStageController {
         setScrollBar(invoiceTableView);
         addEventHandlers();
     }
+
     private void addEventHandlers() {
         closeButton.setOnAction(actionEvent -> stage.hide());
         editButton.setOnAction(event -> {
@@ -92,11 +93,6 @@ public class ListInvoiceStageController {
                 data.add(invoice);
             } else if (notifyType == DatabaseListenerType.DELETE) {
                 data.remove(invoice);
-            } else if (notifyType == DatabaseListenerType.UPDATE) {
-                //TODO usprawnic optymalizacje algorytmu
-                data.removeAll();
-                List<Invoice> all = invoiceService.findAll();
-                data.addAll(all);
             } else {
                 throw new IllegalStateException("Not supported notifyType");
             }

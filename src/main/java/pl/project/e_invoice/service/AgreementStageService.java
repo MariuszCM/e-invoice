@@ -22,6 +22,12 @@ public class AgreementStageService implements DocumentService {
         return null;
     }
 
+    @Override
+    public Document updateDocument(Document document) {
+        illegalOperation();
+        return null;
+    }
+
     private void illegalOperation() {
         throw new IllegalStateException("Agreement operations ale unsupported");
     }

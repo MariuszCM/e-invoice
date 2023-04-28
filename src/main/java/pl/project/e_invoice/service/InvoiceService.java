@@ -30,6 +30,17 @@ public class InvoiceService implements DocumentService {
     }
 
     @Override
+    public Document updateDocument(Document document) {
+        if (document instanceof Invoice) {
+            var docToReturn = invoiceRepository.save((Invoice) document);
+            log.info("invoice just updated to sim: {}", ((Invoice) document).getSimulation());
+            return docToReturn;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
     public List<Invoice> findAll() {
         return invoiceRepository.findAll();
     }
