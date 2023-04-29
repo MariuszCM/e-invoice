@@ -7,6 +7,7 @@ import pl.project.e_invoice.model.documents.Invoice;
 
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
 
 @Component
 @Scope(value = "singleton")
@@ -17,6 +18,11 @@ public class InvoiceDatabaseListener {
     @PostPersist
     public void onCustomerCreated(Invoice invoice) {
         invoiceListener.notifyListeners(invoice, DatabaseListenerType.CREATE);
+    }
+
+    @PostUpdate
+    public void onCustomerUpdated(Invoice invoice) {
+        invoiceListener.notifyListeners(invoice, DatabaseListenerType.UPDATE);
     }
 
     @PostRemove

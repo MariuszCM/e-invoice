@@ -93,6 +93,8 @@ public class ListInvoiceStageController {
                 data.add(invoice);
             } else if (notifyType == DatabaseListenerType.DELETE) {
                 data.remove(invoice);
+            } else if (notifyType == DatabaseListenerType.UPDATE) {
+                //chcemy tylko refresh
             } else {
                 throw new IllegalStateException("Not supported notifyType");
             }
