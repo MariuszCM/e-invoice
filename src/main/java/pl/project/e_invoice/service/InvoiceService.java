@@ -33,6 +33,7 @@ public class InvoiceService implements DocumentService {
     public Document updateDocument(Document document) {
         if (document instanceof Invoice) {
             var docToReturn = invoiceRepository.save((Invoice) document);
+            defaultSimulationService.addStandardEventToHistory(((Invoice) document).getSimulation(), EventType.INVOICE_UPDATED);
             log.info("invoice just updated to sim: {}", ((Invoice) document).getSimulation());
             return docToReturn;
         } else {
