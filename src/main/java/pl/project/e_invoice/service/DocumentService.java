@@ -8,5 +8,6 @@ public interface DocumentService {
     //TODO poprawa na generyki
     Document createDocument(Document document);
     Document updateDocument(Document document);
+    void deleteDocument(Document document);
     <T extends Document> List<T> findAll();
 }

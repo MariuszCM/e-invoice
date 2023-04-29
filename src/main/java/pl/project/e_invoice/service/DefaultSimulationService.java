@@ -9,6 +9,7 @@ import pl.project.e_invoice.model.Simulation;
 import pl.project.e_invoice.repository.SimulationRepository;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +20,7 @@ public class DefaultSimulationService implements SimulationService{
     @Override
     public Simulation createSimulation() {
         Simulation sim = new Simulation();
+        sim.setId(UUID.randomUUID().toString());
         simulationRepository.save(sim);
         addStandardEventToHistory(sim, EventType.SIMUlACTION_CREATED);
         log.info("{} just created", sim);

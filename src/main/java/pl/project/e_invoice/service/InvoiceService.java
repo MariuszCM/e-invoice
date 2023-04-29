@@ -41,6 +41,13 @@ public class InvoiceService implements DocumentService {
     }
 
     @Override
+    public void deleteDocument(Document document) {
+        if (invoiceRepository.existsById(document.getId()) && document instanceof Invoice) {
+            invoiceRepository.delete((Invoice) document);
+        }
+    }
+
+    @Override
     public List<Invoice> findAll() {
         return invoiceRepository.findAll();
     }

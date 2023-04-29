@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 public class HistoryEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     private EventType eventType;
     private LocalDateTime eventTime;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "simulation_id")
     private Simulation simulation;
 }

@@ -19,7 +19,7 @@ public class Invoice extends Document{
     private InvoiceType invoiceType;
     private InvoiceStatus invoiceStatus;
 
-    @OneToOne(mappedBy = "document")
+    @OneToOne(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
     private Simulation simulation;
 
     @Override

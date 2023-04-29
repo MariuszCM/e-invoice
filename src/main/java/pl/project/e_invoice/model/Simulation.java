@@ -14,8 +14,7 @@ import java.util.List;
 @Entity
 public class Simulation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     @OneToMany(mappedBy = "simulation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HistoryEvent> history = new ArrayList<HistoryEvent>();
     @OneToOne

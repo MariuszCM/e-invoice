@@ -28,6 +28,11 @@ public class AgreementStageService implements DocumentService {
         return null;
     }
 
+    @Override
+    public void deleteDocument(Document document) {
+        illegalOperation();
+    }
+
     private void illegalOperation() {
         throw new IllegalStateException("Agreement operations ale unsupported");
     }

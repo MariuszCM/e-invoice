@@ -1,5 +1,6 @@
 package pl.project.e_invoice.controller;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,6 +54,8 @@ public class ListInvoiceStageController {
     @FXML
     private Button editButton;
     @FXML
+    protected Button deleteInvoice;
+    @FXML
     private SplitPane listSplitPane;
     @Autowired
     private InvoiceListener invoiceListener;
@@ -83,6 +86,11 @@ public class ListInvoiceStageController {
 
     private void addEventHandlers() {
         closeButton.setOnAction(actionEvent -> stage.hide());
+        deleteInvoice.setOnAction(actionEvent -> invoiceService.deleteDocument(invoiceTableView.getSelectionModel().getSelectedItem()));
+        deleteInvoice.disableProperty().bind(
+                Bindings.createBooleanBinding(() -> invoiceTableView.getSelectionModel().getSelectedItem() == null,  invoiceTableView.getSelectionModel().selectedItemProperty()));
+        editButton.disableProperty().bind(
+                Bindings.createBooleanBinding(() -> invoiceTableView.getSelectionModel().getSelectedItem() == null,  invoiceTableView.getSelectionModel().selectedItemProperty()));
         editButton.setOnAction(event -> {
             updateStageControllerSplitPane = new LazyFxControllerAndView(() -> this.fxWeaver.load(updateInvoiceStageController.getClass()));
             Invoice currentInvoice = invoiceTableView.getSelectionModel().getSelectedItem();
@@ -92,7 +100,7 @@ public class ListInvoiceStageController {
             if (notifyType == DatabaseListenerType.CREATE) {
                 data.add(invoice);
             } else if (notifyType == DatabaseListenerType.DELETE) {
-                data.remove(invoice);
+                data.removeIf(a -> a.getId().equals(invoice.getId()));
             } else if (notifyType == DatabaseListenerType.UPDATE) {
                 //chcemy tylko refresh
             } else {
