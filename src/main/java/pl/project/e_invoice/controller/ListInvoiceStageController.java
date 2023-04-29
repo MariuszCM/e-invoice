@@ -54,6 +54,7 @@ public class ListInvoiceStageController {
     @FXML
     private Button editButton;
     @FXML
+    //Czy chcemy rzeczywiscie usuwac rekord czy tylko zmieniac widocznosc dla uzytkownika??
     protected Button deleteInvoice;
     @FXML
     private SplitPane listSplitPane;
