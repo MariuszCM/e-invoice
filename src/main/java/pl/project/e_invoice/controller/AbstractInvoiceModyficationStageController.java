@@ -6,9 +6,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.project.e_invoice.integration.regonApi.model.CompanyIntegration;
@@ -29,7 +26,7 @@ import static pl.project.e_invoice.controller.ControllerHelper.addListenerToChoi
 import static pl.project.e_invoice.controller.ControllerHelper.addListenerToProperty;
 
 
-public abstract class AbstractInvoiceModyficationStageController extends AbstractStageController{
+public abstract class AbstractInvoiceModyficationStageController extends AbstractStageController {
     @Autowired
     protected InvoiceService invoiceService;
     @Autowired

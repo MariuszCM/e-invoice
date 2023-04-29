@@ -2,10 +2,7 @@ package pl.project.e_invoice.model.documents;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 @AllArgsConstructor

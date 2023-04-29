@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.project.e_invoice.integration.regonApi.client.RegonApiWebClientActions;
 import pl.project.e_invoice.integration.regonApi.client.ReportType;
-import pl.project.e_invoice.integration.regonApi.model.CompanyModelConverter;
 import pl.project.e_invoice.integration.regonApi.model.CompanyIntegration;
+import pl.project.e_invoice.integration.regonApi.model.CompanyModelConverter;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +19,8 @@ public class NipApiService {
             String sessionId = regenApiClient.login();
             CompanyIntegration companyByNip = findCompanyByNip(nip, sessionId);
             return getCompanyReport(companyByNip, sessionId);
-        } catch (Exception e) { }
+        } catch (Exception e) {
+        }
         return new CompanyIntegration();
     }
 

@@ -5,23 +5,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxControllerAndView;
-import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import net.rgielen.fxweaver.core.LazyFxControllerAndView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
 @FxmlView("MainStage.fxml")
-public class MainStageController extends AbstractStageController{
+public class MainStageController extends AbstractStageController {
+    private final FxControllerAndView<ListInvoiceStageController, SplitPane> listStageControllerSplitPane;
+    private final CreationInvoiceStageController creationInvoiceController;
     @FXML
     protected Button openCreationStage;
     @FXML
     protected Button openBrowseStage;
     private FxControllerAndView<CreationInvoiceStageController, SplitPane> creationStageControllerSplitPane;
-    private final FxControllerAndView<ListInvoiceStageController, SplitPane> listStageControllerSplitPane;
-    private final CreationInvoiceStageController creationInvoiceController;
 
     @FXML
     public void initialize() {

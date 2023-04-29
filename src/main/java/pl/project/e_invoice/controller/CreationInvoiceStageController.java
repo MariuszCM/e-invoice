@@ -4,23 +4,14 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Controller;
-import pl.project.e_invoice.integration.regonApi.model.CompanyIntegration;
 import pl.project.e_invoice.model.Company;
 import pl.project.e_invoice.model.documents.Invoice;
-import pl.project.e_invoice.model.documents.InvoiceStatus;
 import pl.project.e_invoice.model.documents.InvoiceType;
-import pl.project.e_invoice.service.DefaultCompanyService;
 import pl.project.e_invoice.service.DefaultSimulationService;
-import pl.project.e_invoice.service.InvoiceService;
-import pl.project.e_invoice.service.integration.NipApiService;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -97,7 +88,6 @@ public class CreationInvoiceStageController extends AbstractInvoiceModyficationS
             sellerNip.textProperty().setValue(myCompanyNip);
         }
     }
-
 
 
     private void saveInvoice() {
