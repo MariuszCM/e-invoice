@@ -42,6 +42,7 @@ public class UpdateInvoiceStageController extends AbstractInvoiceModyficationSta
             this.stage.setTitle(stageTitle);
             this.stage.getIcons().add(stageImage);
             this.stage.setScene(new Scene(updateSplitPane));
+            this.progressIndicator.setVisible(false);
             this.isWindowOpen = true;
         }
     }

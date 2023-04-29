@@ -14,7 +14,7 @@ import java.util.List;
 public class Simulation {
     @Id
     private String id;
-    @OneToMany(mappedBy = "simulation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "simulation", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HistoryEvent> history = new ArrayList<HistoryEvent>();
     @OneToOne
     @JoinColumn(name = "document_id")

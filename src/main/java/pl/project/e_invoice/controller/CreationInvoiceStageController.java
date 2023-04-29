@@ -47,6 +47,7 @@ public class CreationInvoiceStageController extends AbstractInvoiceModyficationS
             this.stage.setTitle(stageTitle);
             this.stage.getIcons().add(stageImage);
             this.stage.setScene(new Scene(creationSplitPane));
+            this.progressIndicator.setVisible(false);
 
             simulationCreation();
             this.seller = new Company();

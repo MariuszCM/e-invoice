@@ -1,10 +1,9 @@
 package pl.project.e_invoice.controller;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +66,8 @@ public abstract class AbstractInvoiceModyficationStageController extends Abstrac
     protected ChoiceBox<String> invoiceType;
     @FXML
     protected DatePicker invoiceIssueDate;
+    @FXML
+    protected ProgressIndicator progressIndicator = new ProgressIndicator(.314);
     protected Stage stage;
     protected Simulation sim;
     @Setter
@@ -107,12 +108,30 @@ public abstract class AbstractInvoiceModyficationStageController extends Abstrac
     }
 
     protected void searchCompanyByApi() {
-        searchAndSetCompanyFields(buyerNip, buyerName, buyerAddress, buyerEmail);
-        searchAndSetCompanyFields(sellerNip, sellerName, sellerAddress, sellerEmail);
+        searchCompany(buyerNip, buyerName, buyerAddress, buyerEmail);
+        searchCompany(sellerNip, sellerName, sellerAddress, sellerEmail);
     }
 
-    private void searchAndSetCompanyFields(TextField nipField, TextField nameField, TextField addressField, TextField emailField) {
-        CompanyIntegration companyFromApi = regonApiPromptService.getFullCompanyReport(nipField.textProperty().get());
+    private void searchCompany(TextField nipField, TextField nameField, TextField addressField, TextField emailField) {
+        Task<CompanyIntegration> task = new Task<>() {
+            @Override
+            protected CompanyIntegration call() throws Exception {
+                progressIndicator.setVisible(true);
+                CompanyIntegration fullCompanyReport = regonApiPromptService.getFullCompanyReport(nipField.textProperty().get());
+                progressIndicator.setVisible(false);
+                return fullCompanyReport;
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            CompanyIntegration companyFromApi = task.getValue();
+            Platform.runLater(() -> setCompanyFieldsFoundByApi(nameField, addressField, emailField, companyFromApi));
+        });
+
+        new Thread(task).start();
+    }
+
+    private void setCompanyFieldsFoundByApi(TextField nameField, TextField addressField, TextField emailField, CompanyIntegration companyFromApi) {
         nameField.textProperty().setValue(companyFromApi.getCompanyName());
         if (companyFromApi.getStreet() != null && companyFromApi.getCity() != null) {
             addressField.textProperty().setValue(companyFromApi.getStreet() + " " + companyFromApi.getCity());

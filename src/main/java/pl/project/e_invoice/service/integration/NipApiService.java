@@ -17,6 +17,7 @@ public class NipApiService {
     public CompanyIntegration getFullCompanyReport(String nip) {
         try {
             String sessionId = regenApiClient.login();
+            Thread.sleep(10000);
             CompanyIntegration companyByNip = findCompanyByNip(nip, sessionId);
             return getCompanyReport(companyByNip, sessionId);
         } catch (Exception e) {

@@ -17,7 +17,7 @@ public class HistoryEvent {
     private Long id;
     private EventType eventType;
     private LocalDateTime eventTime;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "simulation_id")
     private Simulation simulation;
 }
