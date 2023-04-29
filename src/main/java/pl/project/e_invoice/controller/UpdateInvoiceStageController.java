@@ -4,14 +4,11 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Controller;
-import pl.project.e_invoice.application.PrimaryStageInitializer;
 import pl.project.e_invoice.integration.regonApi.model.CompanyIntegration;
 import pl.project.e_invoice.model.Company;
 import pl.project.e_invoice.model.Simulation;
@@ -19,13 +16,11 @@ import pl.project.e_invoice.model.documents.Invoice;
 import pl.project.e_invoice.model.documents.InvoiceStatus;
 import pl.project.e_invoice.model.documents.InvoiceType;
 import pl.project.e_invoice.service.DefaultCompanyService;
-import pl.project.e_invoice.service.DefaultSimulationService;
 import pl.project.e_invoice.service.InvoiceService;
 import pl.project.e_invoice.service.integration.NipApiService;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static pl.project.e_invoice.controller.ControllerHelper.addListenerToChoiceBox;
@@ -35,7 +30,7 @@ import static pl.project.e_invoice.controller.ControllerHelper.addListenerToProp
 @RequiredArgsConstructor
 @FxmlView("UpdateStage.fxml")
 //TODO fecator i wyniesienie do abstrakcji !!!
-public class UpdateInvoiceStageController {
+public class UpdateInvoiceStageController extends AbstractStageController {
     private final InvoiceService invoiceService;
     private final DefaultCompanyService companyService;
     private final NipApiService regonApiPromptService;
@@ -75,8 +70,6 @@ public class UpdateInvoiceStageController {
     protected DatePicker invoiceIssueDate;
     @FXML
     private SplitPane creationSplitPane;
-    @FXML
-    private Text header;
     private Stage stage;
     private Simulation sim;
     @Setter
@@ -143,9 +136,8 @@ public class UpdateInvoiceStageController {
     private void stageCreationIfNotOpen() {
         if (!this.isWindowOpen) {
             this.stage = new Stage();
-            this.stage.setTitle("Zmiany w fakturze");
-            this.header.setText("Wprowadzanie zmian w fakturze");
-            this.stage.getIcons().add(new Image(Objects.requireNonNull(PrimaryStageInitializer.class.getResourceAsStream("/logo.png"))));
+            this.stage.setTitle(stageTitle);
+            this.stage.getIcons().add(stageImage);
             this.stage.setScene(new Scene(creationSplitPane));
             this.isWindowOpen = true;
         }

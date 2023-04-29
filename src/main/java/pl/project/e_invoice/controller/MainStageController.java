@@ -14,13 +14,11 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequiredArgsConstructor
 @FxmlView("MainStage.fxml")
-public class MainStageController {
+public class MainStageController extends AbstractStageController{
     @FXML
     protected Button openCreationStage;
     @FXML
     protected Button openBrowseStage;
-    @Autowired
-    private FxWeaver fxWeaver;
     private FxControllerAndView<CreationInvoiceStageController, SplitPane> creationStageControllerSplitPane;
     private final FxControllerAndView<ListInvoiceStageController, SplitPane> listStageControllerSplitPane;
     private final CreationInvoiceStageController creationInvoiceController;

@@ -5,3 +5,4 @@ company:
   nip: '7780045529'
 bundle-properties:
   noData: 'brak danych'
+  stageTitle: 'InVoice App'

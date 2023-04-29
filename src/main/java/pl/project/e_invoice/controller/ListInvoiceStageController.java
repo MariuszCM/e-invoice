@@ -8,29 +8,25 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxControllerAndView;
-import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import net.rgielen.fxweaver.core.LazyFxControllerAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import pl.project.e_invoice.application.PrimaryStageInitializer;
 import pl.project.e_invoice.model.documents.Invoice;
 import pl.project.e_invoice.model.listeners.DatabaseListenerType;
 import pl.project.e_invoice.model.listeners.InvoiceListener;
 import pl.project.e_invoice.service.InvoiceService;
 
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @FxmlView("ListInvoicesStage.fxml")
 @RequiredArgsConstructor
-public class ListInvoiceStageController {
+public class ListInvoiceStageController extends AbstractStageController {
     private final InvoiceService invoiceService;
     private final UpdateInvoiceStageController updateInvoiceStageController;
     @FXML
@@ -50,23 +46,20 @@ public class ListInvoiceStageController {
     @FXML
     protected ScrollBar scroll;
     @FXML
+    //Czy chcemy rzeczywiscie usuwac rekord czy tylko zmieniac widocznosc dla uzytkownika??
+    protected Button deleteInvoice;
+    @FXML
     private Button closeButton;
     @FXML
     private Button editButton;
-    @FXML
-    //Czy chcemy rzeczywiscie usuwac rekord czy tylko zmieniac widocznosc dla uzytkownika??
-    protected Button deleteInvoice;
     @FXML
     private SplitPane listSplitPane;
     @Autowired
     private InvoiceListener invoiceListener;
     private Stage stage;
-    @Autowired
-    private FxWeaver fxWeaver;
     private FxControllerAndView<UpdateInvoiceStageController, SplitPane> updateStageControllerSplitPane;
     private ObservableList<Invoice> data;
     private boolean isWindowOpen = false;
-    private String title = "";
     @Value("${bundle-properties.noData}")
     private String noData;
 
@@ -75,8 +68,8 @@ public class ListInvoiceStageController {
     public void initialize() {
         if (!isWindowOpen) {
             this.stage = new Stage();
-            stage.setTitle(title);
-            this.stage.getIcons().add(new Image(Objects.requireNonNull(PrimaryStageInitializer.class.getResourceAsStream("/logo.png"))));
+            stage.setTitle(stageTitle);
+            this.stage.getIcons().add(stageImage);
             stage.setScene(new Scene(listSplitPane));
             isWindowOpen = true;
         }
@@ -89,9 +82,9 @@ public class ListInvoiceStageController {
         closeButton.setOnAction(actionEvent -> stage.hide());
         deleteInvoice.setOnAction(actionEvent -> invoiceService.deleteDocument(invoiceTableView.getSelectionModel().getSelectedItem()));
         deleteInvoice.disableProperty().bind(
-                Bindings.createBooleanBinding(() -> invoiceTableView.getSelectionModel().getSelectedItem() == null,  invoiceTableView.getSelectionModel().selectedItemProperty()));
+                Bindings.createBooleanBinding(() -> invoiceTableView.getSelectionModel().getSelectedItem() == null, invoiceTableView.getSelectionModel().selectedItemProperty()));
         editButton.disableProperty().bind(
-                Bindings.createBooleanBinding(() -> invoiceTableView.getSelectionModel().getSelectedItem() == null,  invoiceTableView.getSelectionModel().selectedItemProperty()));
+                Bindings.createBooleanBinding(() -> invoiceTableView.getSelectionModel().getSelectedItem() == null, invoiceTableView.getSelectionModel().selectedItemProperty()));
         editButton.setOnAction(event -> {
             updateStageControllerSplitPane = new LazyFxControllerAndView(() -> this.fxWeaver.load(updateInvoiceStageController.getClass()));
             Invoice currentInvoice = invoiceTableView.getSelectionModel().getSelectedItem();
