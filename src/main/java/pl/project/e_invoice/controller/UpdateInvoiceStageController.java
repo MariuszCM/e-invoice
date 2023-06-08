@@ -26,14 +26,13 @@ public class UpdateInvoiceStageController extends AbstractInvoiceModyficationSta
     }
 
     private void addDisableForButtons() {
-        saveInvoice.disableProperty().bind(
-                Bindings.isEmpty(sellerNip.textProperty())
-                        .or(Bindings.isEmpty(buyerNip.textProperty()))
-                        .or(Bindings.isEmpty(invoiceId.textProperty()))
-                        .or(Bindings.isEmpty(amount.textProperty()))
+        saveInvoiceButton.disableProperty().bind(
+                Bindings.isEmpty(sellerNipTextField.textProperty())
+                        .or(Bindings.isEmpty(buyerNipTextField.textProperty()))
+                        .or(Bindings.isEmpty(invoiceIdTextField.textProperty()))
+                        .or(Bindings.isEmpty(amountTextField.textProperty()))
         );
-        //nie chcemy aby ktos zmianial numer faktury
-        invoiceId.setDisable(true);
+        invoiceIdTextField.setDisable(true);
     }
 
     private void stageCreationIfNotOpen() {
@@ -53,8 +52,8 @@ public class UpdateInvoiceStageController extends AbstractInvoiceModyficationSta
     }
 
     private void addHandlersForButtons() {
-        this.saveInvoice.setOnAction(event -> saveInvoice());
-        this.searchCompany.setOnAction(event -> searchCompanyByApi());
+        this.saveInvoiceButton.setOnAction(event -> saveInvoice());
+        this.searchCompanyButton.setOnAction(event -> searchCompanyByApi());
     }
 
     private void saveInvoice() {
@@ -81,21 +80,21 @@ public class UpdateInvoiceStageController extends AbstractInvoiceModyficationSta
     }
 
     private void fillDataToFields() {
-        invoiceId.setText(invoice.getId());
-        invoiceType.setValue(invoice.getInvoiceType() != null ? invoice.getInvoiceType().getLabel() : null);
-        invoiceStatus.setValue(invoice.getInvoiceStatus() != null ? invoice.getInvoiceStatus().getLabel() : null);
-        invoiceIssueDate.setValue(invoice.getDateOfIssue());
-        invoiceName.setText(invoice.getName());
-        amount.setText(invoice.getValue() != null ? invoice.getValue().toString() : null);
+        invoiceIdTextField.setText(invoice.getId());
+        invoiceTypeChoiceBox.setValue(invoice.getInvoiceType() != null ? invoice.getInvoiceType().getLabel() : null);
+        invoiceStatusChoiceBox.setValue(invoice.getInvoiceStatus() != null ? invoice.getInvoiceStatus().getLabel() : null);
+        invoiceIssueDatePicker.setValue(invoice.getDateOfIssue());
+        invoiceNameTextField.setText(invoice.getName());
+        amountTextField.setText(invoice.getValue() != null ? invoice.getValue().toString() : null);
 
-        sellerNip.setText(seller.getNip());
-        sellerAddress.setText(seller.getAddress());
-        sellerName.setText(seller.getCompanyName());
-        sellerEmail.setText(seller.getEmail());
+        sellerNipTextField.setText(seller.getNip());
+        sellerAddressTextField.setText(seller.getAddress());
+        sellerNameTextField.setText(seller.getCompanyName());
+        sellerEmailTextField.setText(seller.getEmail());
 
-        buyerNip.setText(buyer.getNip());
-        buyerAddress.setText(buyer.getAddress());
-        buyerName.setText(buyer.getCompanyName());
-        buyerEmail.setText(buyer.getEmail());
+        buyerNipTextField.setText(buyer.getNip());
+        buyerAddressTextField.setText(buyer.getAddress());
+        buyerNameTextField.setText(buyer.getCompanyName());
+        buyerEmailTextField.setText(buyer.getEmail());
     }
 }

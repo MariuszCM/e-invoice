@@ -46,8 +46,8 @@ public class ListInvoiceStageController extends AbstractStageController {
     @FXML
     protected ScrollBar scroll;
     @FXML
-    //Czy chcemy rzeczywiscie usuwac rekord czy tylko zmieniac widocznosc dla uzytkownika??
-    protected Button deleteInvoice;
+    //TODO Czy chcemy rzeczywiscie usuwac rekord czy tylko zmieniac widocznosc dla uzytkownika??
+    protected Button deleteInvoiceButton;
     @FXML
     private Button closeButton;
     @FXML
@@ -80,8 +80,8 @@ public class ListInvoiceStageController extends AbstractStageController {
 
     private void addEventHandlers() {
         closeButton.setOnAction(actionEvent -> stage.hide());
-        deleteInvoice.setOnAction(actionEvent -> invoiceService.deleteDocument(invoiceTableView.getSelectionModel().getSelectedItem()));
-        deleteInvoice.disableProperty().bind(
+        deleteInvoiceButton.setOnAction(actionEvent -> invoiceService.deleteDocument(invoiceTableView.getSelectionModel().getSelectedItem()));
+        deleteInvoiceButton.disableProperty().bind(
                 Bindings.createBooleanBinding(() -> invoiceTableView.getSelectionModel().getSelectedItem() == null, invoiceTableView.getSelectionModel().selectedItemProperty()));
         editButton.disableProperty().bind(
                 Bindings.createBooleanBinding(() -> invoiceTableView.getSelectionModel().getSelectedItem() == null, invoiceTableView.getSelectionModel().selectedItemProperty()));
@@ -95,9 +95,7 @@ public class ListInvoiceStageController extends AbstractStageController {
                 data.add(invoice);
             } else if (notifyType == DatabaseListenerType.DELETE) {
                 data.removeIf(a -> a.getId().equals(invoice.getId()));
-            } else if (notifyType == DatabaseListenerType.UPDATE) {
-                //chcemy tylko refresh
-            } else {
+            } else if (notifyType != DatabaseListenerType.UPDATE) {
                 throw new IllegalStateException("Not supported notifyType");
             }
             invoiceTableView.refresh();

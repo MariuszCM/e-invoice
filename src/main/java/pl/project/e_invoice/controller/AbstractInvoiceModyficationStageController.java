@@ -33,39 +33,39 @@ public abstract class AbstractInvoiceModyficationStageController extends Abstrac
     @Autowired
     protected NipApiService regonApiPromptService;
     @FXML
-    protected Button saveInvoice;
+    protected Button saveInvoiceButton;
     @FXML
-    protected Button searchCompany;
+    protected Button searchCompanyButton;
     @FXML
-    protected TextField invoiceId;
+    protected TextField invoiceIdTextField;
     @FXML
-    protected TextField sellerNip;
+    protected TextField sellerNipTextField;
     @FXML
-    protected TextField sellerName;
+    protected TextField sellerNameTextField;
     @FXML
-    protected TextField sellerAddress;
+    protected TextField sellerAddressTextField;
     @FXML
-    protected TextField sellerEmail;
+    protected TextField sellerEmailTextField;
     @FXML
-    protected TextField buyerNip;
+    protected TextField buyerNipTextField;
     @FXML
-    protected TextField buyerName;
+    protected TextField buyerNameTextField;
     @FXML
-    protected TextField buyerAddress;
+    protected TextField buyerAddressTextField;
     @FXML
-    protected TextField buyerEmail;
+    protected TextField buyerEmailTextField;
     @FXML
-    protected TextField invoiceName;
+    protected TextField invoiceNameTextField;
     //TODO dodac walidacje na liczby
     //TODO dobrze by bylo tez dodac walidacje na . i ,
     @FXML
-    protected TextField amount;
+    protected TextField amountTextField;
     @FXML
-    protected ChoiceBox<String> invoiceStatus;
+    protected ChoiceBox<String> invoiceStatusChoiceBox;
     @FXML
-    protected ChoiceBox<String> invoiceType;
+    protected ChoiceBox<String> invoiceTypeChoiceBox;
     @FXML
-    protected DatePicker invoiceIssueDate;
+    protected DatePicker invoiceIssueDatePicker;
     @FXML
     protected ProgressIndicator progressIndicator = new ProgressIndicator(.314);
     protected Stage stage;
@@ -76,8 +76,6 @@ public abstract class AbstractInvoiceModyficationStageController extends Abstrac
     protected Company buyer;
     protected boolean isWindowOpen = false;
 
-    //srednio mi sie podoba takie rozwiazanie ale nie widze innego
-    //przystepnego sposobu na rozwiazanie tego
     protected void addListenersForFields() {
         addListenersForBuyer();
         addListenersForSeller();
@@ -85,37 +83,37 @@ public abstract class AbstractInvoiceModyficationStageController extends Abstrac
     }
 
     private void addListenersForBuyer() {
-        addListenerToProperty(buyerNip.textProperty(), buyer::setNip);
-        addListenerToProperty(buyerName.textProperty(), buyer::setCompanyName);
-        addListenerToProperty(buyerAddress.textProperty(), buyer::setAddress);
-        addListenerToProperty(buyerEmail.textProperty(), buyer::setEmail);
+        addListenerToProperty(buyerNipTextField.textProperty(), buyer::setNip);
+        addListenerToProperty(buyerNameTextField.textProperty(), buyer::setCompanyName);
+        addListenerToProperty(buyerAddressTextField.textProperty(), buyer::setAddress);
+        addListenerToProperty(buyerEmailTextField.textProperty(), buyer::setEmail);
     }
 
     private void addListenersForSeller() {
-        addListenerToProperty(sellerNip.textProperty(), seller::setNip);
-        addListenerToProperty(sellerName.textProperty(), seller::setCompanyName);
-        addListenerToProperty(sellerAddress.textProperty(), seller::setAddress);
-        addListenerToProperty(sellerEmail.textProperty(), seller::setEmail);
+        addListenerToProperty(sellerNipTextField.textProperty(), seller::setNip);
+        addListenerToProperty(sellerNameTextField.textProperty(), seller::setCompanyName);
+        addListenerToProperty(sellerAddressTextField.textProperty(), seller::setAddress);
+        addListenerToProperty(sellerEmailTextField.textProperty(), seller::setEmail);
     }
 
     private void addListenersForInvoice() {
-        addListenerToProperty(invoiceId.textProperty(), invoice::setId);
-        addListenerToProperty(invoiceName.textProperty(), invoice::setName);
-        addListenerToProperty(amount.textProperty(), BigDecimal::new, invoice::setValue);
-        addListenerToChoiceBox(invoiceStatus, InvoiceStatus.convertLabelTOEnum(), invoice::setInvoiceStatus);
-        addListenerToChoiceBox(invoiceType, InvoiceType.convertLabelTOEnum(), invoice::setInvoiceType);
-        addListenerToProperty(invoiceIssueDate.valueProperty(), invoice::setDateOfIssue);
+        addListenerToProperty(invoiceIdTextField.textProperty(), invoice::setId);
+        addListenerToProperty(invoiceNameTextField.textProperty(), invoice::setName);
+        addListenerToProperty(amountTextField.textProperty(), BigDecimal::new, invoice::setValue);
+        addListenerToChoiceBox(invoiceStatusChoiceBox, InvoiceStatus.convertLabelTOEnum(), invoice::setInvoiceStatus);
+        addListenerToChoiceBox(invoiceTypeChoiceBox, InvoiceType.convertLabelTOEnum(), invoice::setInvoiceType);
+        addListenerToProperty(invoiceIssueDatePicker.valueProperty(), invoice::setDateOfIssue);
     }
 
     protected void searchCompanyByApi() {
-        searchCompany(buyerNip, buyerName, buyerAddress, buyerEmail);
-        searchCompany(sellerNip, sellerName, sellerAddress, sellerEmail);
+        searchCompany(buyerNipTextField, buyerNameTextField, buyerAddressTextField, buyerEmailTextField);
+        searchCompany(sellerNipTextField, sellerNameTextField, sellerAddressTextField, sellerEmailTextField);
     }
 
     private void searchCompany(TextField nipField, TextField nameField, TextField addressField, TextField emailField) {
         Task<CompanyIntegration> task = new Task<>() {
             @Override
-            protected CompanyIntegration call() throws Exception {
+            protected CompanyIntegration call() {
                 progressIndicator.setVisible(true);
                 CompanyIntegration fullCompanyReport = regonApiPromptService.getFullCompanyReport(nipField.textProperty().get());
                 progressIndicator.setVisible(false);
@@ -142,7 +140,7 @@ public abstract class AbstractInvoiceModyficationStageController extends Abstrac
     }
 
     protected void addItemsForChoiceBoxes() {
-        invoiceStatus.getItems().addAll(Arrays.stream(InvoiceStatus.values()).map(InvoiceStatus::getLabel).collect(Collectors.toList()));
-        invoiceType.getItems().addAll(Arrays.stream(InvoiceType.values()).map(InvoiceType::getLabel).collect(Collectors.toList()));
+        invoiceStatusChoiceBox.getItems().addAll(Arrays.stream(InvoiceStatus.values()).map(InvoiceStatus::getLabel).collect(Collectors.toList()));
+        invoiceTypeChoiceBox.getItems().addAll(Arrays.stream(InvoiceType.values()).map(InvoiceType::getLabel).collect(Collectors.toList()));
     }
 }

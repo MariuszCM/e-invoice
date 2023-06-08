@@ -35,7 +35,7 @@
             <ScrollBar fx:id="scroll" layoutX="1123.0" layoutY="139.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="14.0" />
             <Label fx:id="infoLabel" alignment="CENTER" layoutX="200.0" layoutY="99.0" prefHeight="17.0" prefWidth="350.0" />
             <Button fx:id="editButton" layoutX="268.0" layoutY="713.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="564.0" text="Edytuj" />
-            <Button fx:id="deleteInvoice" layoutX="1029.0" layoutY="713.0" mnemonicParsing="false" text="Usuń" />
+            <Button fx:id="deleteInvoiceButton" layoutX="1029.0" layoutY="713.0" mnemonicParsing="false" text="Usuń" />
             <Text layoutX="41.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista faktur">
                <font>
                   <Font size="38.0" />

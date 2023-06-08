@@ -33,11 +33,11 @@ public class CreationInvoiceStageController extends AbstractInvoiceModyficationS
     }
 
     private void addDisableForButtons() {
-        saveInvoice.disableProperty().bind(
-                Bindings.isEmpty(sellerNip.textProperty())
-                        .or(Bindings.isEmpty(buyerNip.textProperty()))
-                        .or(Bindings.isEmpty(invoiceId.textProperty()))
-                        .or(Bindings.isEmpty(amount.textProperty()))
+        saveInvoiceButton.disableProperty().bind(
+                Bindings.isEmpty(sellerNipTextField.textProperty())
+                        .or(Bindings.isEmpty(buyerNipTextField.textProperty()))
+                        .or(Bindings.isEmpty(invoiceIdTextField.textProperty()))
+                        .or(Bindings.isEmpty(amountTextField.textProperty()))
         );
     }
 
@@ -72,21 +72,21 @@ public class CreationInvoiceStageController extends AbstractInvoiceModyficationS
     }
 
     private void addHandlersForChoiceBoxes() {
-        this.invoiceType.setOnAction(event -> setMyCompanyNipForField());
+        this.invoiceTypeChoiceBox.setOnAction(event -> setMyCompanyNipForField());
     }
 
     private void addHandlersForButtons() {
-        this.saveInvoice.setOnAction(event -> saveInvoice());
-        this.searchCompany.setOnAction(event -> searchCompanyByApi());
+        this.saveInvoiceButton.setOnAction(event -> saveInvoice());
+        this.searchCompanyButton.setOnAction(event -> searchCompanyByApi());
     }
 
     private void setMyCompanyNipForField() {
-        if (InvoiceType.convertLabelTOEnum().apply(invoiceType.getValue()) == InvoiceType.INCOME) {
-            buyerNip.textProperty().setValue(myCompanyNip);
-            sellerNip.textProperty().setValue(null);
-        } else if (InvoiceType.convertLabelTOEnum().apply(invoiceType.getValue()) == InvoiceType.OUTCOME) {
-            buyerNip.textProperty().setValue(null);
-            sellerNip.textProperty().setValue(myCompanyNip);
+        if (InvoiceType.convertLabelTOEnum().apply(invoiceTypeChoiceBox.getValue()) == InvoiceType.INCOME) {
+            buyerNipTextField.textProperty().setValue(myCompanyNip);
+            sellerNipTextField.textProperty().setValue(null);
+        } else if (InvoiceType.convertLabelTOEnum().apply(invoiceTypeChoiceBox.getValue()) == InvoiceType.OUTCOME) {
+            buyerNipTextField.textProperty().setValue(null);
+            sellerNipTextField.textProperty().setValue(myCompanyNip);
         }
     }
 
